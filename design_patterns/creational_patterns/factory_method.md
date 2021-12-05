@@ -117,7 +117,7 @@ While the output in this case is 'BMW', we can simply change the CarEnum value a
 * When you don’t know beforehand the exact types and dependencies of the objects your code should work with.
 * When you want to provide users of your library or framework with a way to extend its internal components.
 * When you want to save system resources by reusing existing objects instead of rebuilding them each time.
-* 
+
 ## TLDR
 * Factory method design pattern provides a way for creating objects in the base class but also allow subclasses options to choose the type of objects to instantiate.
 * The `new` keyword is a no-no in this case. There is a difference between requesting an object and creating a new one.
