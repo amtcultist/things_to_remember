@@ -1,13 +1,11 @@
 Creational Design Pattern
 =========================
 
-## Factory method
+## Factory Method
 
-### Definition
-* Define an interface for creating an object, but let subclasses decide class to instantiate
-* Defining a virtual constructor, since it will create instances not by using a normal constructor (new keyword) but a method
+As a matter of facts, factory method commonly referred to both the method that create an instance, and the design pattern.
 
-### Example of a factory method:
+#### Example of a factory method:
 ```ts
 function createBMWCar(): Car {
   car: Car = new Car();
@@ -18,12 +16,24 @@ function createBMWCar(): Car {
   return car;
 }
 ```
+This, however, is different from the ***SPECIAL*** factory method we will use.
 
-While the above example give us a cliche view of a factory method, the definition did tell us how factory method design pattern will benefit subclasses writing style -
-through abstraction and polymorphism
+### Problem
+You are working at a rising company. However, when your company extends, you received a new deal. Your codebase, however, is coupled to a certain class now, and it will take a lot of effort to at another one. Have I mentioned the risks within this action ?
 
-### Factory method withing OOP context - subclasses
+### Solution
+* Replace direct call (using `new`) with a special factory method. Objects return from these methods often referred as products.
+* By doing so, you can have the advantage of override the factory method within subclasses and change property - if not the whole class of the product.
 
+### Intent
+* Define an interface for creating an object, but let subclasses decide class to instantiate
+* Defining a virtual constructor, since it will create instances not by using a normal constructor (new keyword) but a method.
+
+### Limitation
+* Only products with common base class or interface - aka same factory, can apply this. This is common sense, since you cannot product shoes in a food factory, right.
+* The factory method in the base class should have its return type declared as this interface.
+
+### Study case
 We have this nice constructor of a car factory - and different car brands
 
 ```
@@ -37,10 +47,17 @@ However, life is not simple, so are BAs and POs. If my worklife balancing is a g
 
 Anyway, since we don't know and won't sure that there only 3 subclasses, we create a factory method within the base class to ***STANDARIZE*** the architechture model. <br/><br/>
 
-### Example of factory method in Base class
-We have these three subclasses
+### Study case application
+First we have our common interface
 ```ts
-class BMW {
+interface ICar {
+  honk: () => void
+}
+```
+
+Then we have these three subclasses
+```ts
+class BMW: ICar {
   constructor() {}
   
   honk() {
@@ -50,7 +67,7 @@ class BMW {
 ```
 
 ```ts
-class Audi {
+class Audi: ICar {
   constructor() {}
   
   honk() {
@@ -60,7 +77,7 @@ class Audi {
 ```
 
 ```ts
-class Lamborghini {
+class Lamborghini: ICar {
   constructor() {}
   
   honk() {
@@ -69,10 +86,10 @@ class Lamborghini {
 }
 ```
 
-Below is an example of that juicy factory class in base class Car, with options provided for subclasses (BMW, Audi and Lamborghini) with the help of our old reliable friend Enum
+#### Example of special factory method within base class
 ```ts
 class Car {
-  createCar(carType: CarEnum) {
+  createCar(carType: CarEnum): ICar {
     switch (carType) {
       case CarEnum.BMW:
         return new BMW();
@@ -95,8 +112,6 @@ So for example, when we call a car like this
   currentCar.honk();
 ```
 While the output in this case is 'BMW', we can simply change the CarEnum value and get another subclass instantiate. How simple is that!
-
-
 
 ## TLDR
 * Factory method design pattern provides a way for creating objects in the base class but also allow subclasses options to choose the type of objects to instantiate.
