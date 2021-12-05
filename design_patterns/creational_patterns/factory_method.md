@@ -113,11 +113,26 @@ So for example, when we call a car like this
 ```
 While the output in this case is 'BMW', we can simply change the CarEnum value and get another subclass instantiate. How simple is that!
 
+### When to use Factory Method
+* When you don’t know beforehand the exact types and dependencies of the objects your code should work with.
+* When you want to provide users of your library or framework with a way to extend its internal components.
+* When you want to save system resources by reusing existing objects instead of rebuilding them each time.
+* 
 ## TLDR
 * Factory method design pattern provides a way for creating objects in the base class but also allow subclasses options to choose the type of objects to instantiate.
 * The `new` keyword is a no-no in this case. There is a difference between requesting an object and creating a new one.
 Since the `new` operator ***ALWAYS*** creates an object, it will fail to encapsulate object creation! Factory Method, on the other hand, enforces that sweet encapsulation for us,
 and allows an object to be requested without create another one.
+* Use factory method when
+  - You are not sure about the future of this project and can't get rid of it fast enough - Factory Method will be there for you.
+  - You want to write a library or a framework and want to give your user some flexible way to code (that is, if they are not fullstackoverflow developers)
+  - You want your potato pc run your software faster, since they reusing existing object instead of
+     * Find a new space
+     * Allocate that space to use
+     * Create a new instance
+     * Allocate that space
+     * Don't forget the risk of memory leaking (of old instance)
+  
 ## Extra info within Factory Method
 * One of the advantage of a Factory Method is that it can be customizable easy. You can return the same instance multiple times (like a singleton) by saving the instance within base class, or can return a subclass rather than an object<br/>
 
@@ -166,11 +181,6 @@ class Car {
 To be honest, since JS treated ***EVERYTHING*** as object (so are subclasses), it is easy to return like this.
 * Some recommend that when using Factory Method, absolute all constructors should be private or protected. This, is a matter of how programming languages handle classes (and style, of course).
 You should research what's best when designing your projects.
-
-### When to use Factory Method
-* When you don’t know beforehand the exact types and dependencies of the objects your code should work with.
-* When you want to provide users of your library or framework with a way to extend its internal components.
-* When you want to save system resources by reusing existing objects instead of rebuilding them each time.
 
 ## Extra usage info (require other Design Patterns knowledge)
 * Abstract Factory (another design patterns) classes often implemented Factory Methods, but they can be implemented using Prototype.
